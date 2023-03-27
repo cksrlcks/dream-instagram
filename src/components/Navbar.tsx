@@ -1,7 +1,9 @@
 "use client";
 import { useSession, signIn, signOut } from "next-auth/react";
+import Image from "next/image";
 import Link from "next/link";
 import ActiveLink from "./ActiveLink";
+import Avatar from "./Avatar";
 import ColorButton from "./ui/ColorButton";
 import HomeFillIcon from "./ui/icons/HomeFillIcon";
 import HomeIcon from "./ui/icons/HomeIcon";
@@ -30,7 +32,7 @@ const menu = [
 
 export default function Header() {
     const { data: session } = useSession();
-
+    const user = session?.user;
     return (
         <header className="border-b sticy top-0">
             <div className="flex justify-end max-w-screen-xl mx-auto  py-4 px-4">
@@ -39,10 +41,30 @@ export default function Header() {
                 </h1>
                 <nav className="flex items-center gap-4 mr-4">
                     {menu.map((item) => (
-                        <ActiveLink key={item.href} href={item.href} icon={item.icon} activeIcon={item.activeIcon} />
+                        <ActiveLink
+                            key={item.href}
+                            href={item.href}
+                            icon={item.icon}
+                            activeIcon={item.activeIcon}
+                        />
                     ))}
                 </nav>
-                {session ? <ColorButton text="Sign Out" onClick={() => signOut()} /> : <ColorButton text="Sign In" onClick={() => signIn()} />}
+                {session ? (
+                    <>
+                        <Link
+                            href={`/user/${session.user.name}`}
+                            className="overflow-hidden rounded-full mr-3"
+                        >
+                            <Avatar image={session.user.image} />
+                        </Link>
+                        <ColorButton
+                            text="Sign Out"
+                            onClick={() => signOut()}
+                        />
+                    </>
+                ) : (
+                    <ColorButton text="Sign In" onClick={() => signIn()} />
+                )}
             </div>
         </header>
     );
