@@ -34,33 +34,22 @@ export default function Header() {
     const { data: session } = useSession();
     const user = session?.user;
     return (
-        <header className="border-b sticy top-0">
-            <div className="flex justify-end max-w-screen-xl mx-auto  py-4 px-4">
+        <header className="border-b sticy top-0 h-[60px]">
+            <div className="flex justify-end items-center max-w-screen-xl h-full mx-auto px-4">
                 <h1 className="flex-none mr-auto">
                     <Link href="/">Instagram</Link>
                 </h1>
                 <nav className="flex items-center gap-4 mr-4">
                     {menu.map((item) => (
-                        <ActiveLink
-                            key={item.href}
-                            href={item.href}
-                            icon={item.icon}
-                            activeIcon={item.activeIcon}
-                        />
+                        <ActiveLink key={item.href} href={item.href} icon={item.icon} activeIcon={item.activeIcon} />
                     ))}
                 </nav>
                 {session ? (
                     <>
-                        <Link
-                            href={`/user/${session.user.name}`}
-                            className="overflow-hidden rounded-full mr-3"
-                        >
-                            <Avatar image={session.user.image} />
+                        <Link href={`/user/${session.user.name}`} className="overflow-hidden rounded-full mr-3">
+                            <Avatar image={session.user.image} highlight={true} />
                         </Link>
-                        <ColorButton
-                            text="Sign Out"
-                            onClick={() => signOut()}
-                        />
+                        <ColorButton text="Sign Out" onClick={() => signOut()} />
                     </>
                 ) : (
                     <ColorButton text="Sign In" onClick={() => signIn()} />
