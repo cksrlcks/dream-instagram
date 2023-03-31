@@ -22,3 +22,15 @@ export async function createUser({ id, name, email, image, username }: OAuthUser
     });
     return result;
 }
+
+export async function getUserByUsername(username: string) {
+    return client.fetch(
+        `*[_type == "user" && username == "${username}"][0]{
+            ...,
+            "id": _id,
+            following[]->{username, image},
+            followers[]->{username, image},
+            "bookmarks": bookmarks[]->_id
+        }`
+    );
+}

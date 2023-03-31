@@ -38,14 +38,15 @@ export default function Sidebar({ user: { name, username, image } }: { user: Use
                     <div>{name}</div>
                 </div>
             </div>
+            <div className="mb-10">호잇호잇 내소개</div>
             <div className="flex items-center gap-1 flex-wrap">
                 {menu.map((item, index) => (
-                    <>
-                        <Link key={index} href={item.href} className="text-sm text-slate-60">
+                    <div key={index} className="flex items-center gap-1">
+                        <Link href={item.href} className="text-sm text-slate-60">
                             {item.name}
                         </Link>
                         {index < menu.length - 1 && <span className="w-1 h-1 inline-block rounded-full bg-slate-400"></span>}
-                    </>
+                    </div>
                 ))}
             </div>
             <div>copyright instagram</div>

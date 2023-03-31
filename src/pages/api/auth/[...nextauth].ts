@@ -25,7 +25,7 @@ export const authOptions: NextAuthOptions = {
             return true;
         },
         async session({ session }) {
-            const user = session?.user;
+            const user = session.user;
             if (user) {
                 session.user = {
                     ...user,

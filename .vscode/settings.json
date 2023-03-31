@@ -1,7 +1,42 @@
 {
     "typescript.tsdk": "node_modules\\typescript\\lib",
     "typescript.enablePromptUseWorkspaceTsdk": true,
+    "explorer.confirmDelete": false,
+    "emmet.triggerExpansionOnTab": true,
+    "emmet.includeLanguages": {
+        "javascript": "javascriptreact"
+    },
+    "liveServer.settings.donotShowInfoMsg": true,
+    "editor.wordWrap": "on",
+    "liveSassCompile.settings.formats": [
+        {
+            "format": "compressed",
+            "extensionName": ".css"
+        }
+    ],
+    "liveSassCompile.settings.autoprefix": ["> 1%", "last 2 versions"],
+    "liveSassCompile.settings.generateMap": false,
+    "liveSassCompile.settings.excludeList": ["**/node_modules/**", ".vscode/**"],
     "editor.formatOnSave": true,
     "editor.defaultFormatter": "esbenp.prettier-vscode",
-    "prettier.tabWidth": 4
+    "emmet.preferences": {},
+    "prettier.printWidth": 180,
+    "prettier.tabWidth": 4,
+    "[js]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "[jsx]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "[scss]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "[jsonc]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "editor.quickSuggestions": {
+        "strings": true
+    },
+    "css.validate": false,
+    "editor.inlineSuggest.enabled": true
 }

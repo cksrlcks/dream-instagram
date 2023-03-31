@@ -1,4 +1,4 @@
-import Followers from "@/components/Followers";
+import FollowingBar from "@/components/FollowingBar";
 import Posts from "@/components/Posts";
 import Sidebar from "@/components/Sidebar";
 import { authOptions } from "@/pages/api/auth/[...nextauth]";
@@ -6,6 +6,7 @@ import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
 
 export default async function Home() {
+    //SSR
     const session = await getServerSession(authOptions);
     const user = session?.user;
     if (!user) {
@@ -13,12 +14,12 @@ export default async function Home() {
     }
     return (
         <section>
-            <div className="flex">
-                <div className=" flex-grow">
-                    <Followers />
+            <div className="flex gap-10">
+                <div className="flex-grow min-w-0">
+                    <FollowingBar />
                     <Posts />
                 </div>
-                <div className="w-[260px]">
+                <div className="w-[320px]">
                     <Sidebar user={user} />
                 </div>
             </div>

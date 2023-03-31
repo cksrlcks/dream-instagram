@@ -34,10 +34,12 @@ export default function Header() {
     const { data: session } = useSession();
     const user = session?.user;
     return (
-        <header className="border-b sticy top-0 h-[60px]">
+        <header className="border-b sticy top-0 h-[60px] bg-white">
             <div className="flex justify-end items-center max-w-screen-xl h-full mx-auto px-4">
                 <h1 className="flex-none mr-auto">
-                    <Link href="/">Instagram</Link>
+                    <Link href="/" className="font-bold">
+                        Instantgram
+                    </Link>
                 </h1>
                 <nav className="flex items-center gap-4 mr-4">
                     {menu.map((item) => (
