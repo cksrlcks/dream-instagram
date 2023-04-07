@@ -2,12 +2,12 @@
 import useSWR from "swr";
 import ClipLoader from "react-spinners/ClipLoader";
 import Avatar from "./Avatar";
-import { DetailUser, User } from "@/model/user";
+import { HomeUser, AuthUser } from "@/model/user";
 import Link from "next/link";
 import Slider from "./Slider";
 
 export default function Followers() {
-    const { data, isLoading, error } = useSWR<DetailUser>("/api/me");
+    const { data, isLoading, error } = useSWR<HomeUser>("/api/me");
     const users = data?.following;
     return (
         <div className="bg-white rounded-md border border-slate-300 mb-4 py-4 px-6">
@@ -16,7 +16,7 @@ export default function Followers() {
                     <ClipLoader color="#000" loading={isLoading} size={30} />
                 </div>
             ) : (
-                (!users || users.length === 0) && <p>you don't have following user</p>
+                (!users || users.length === 0) && <p>you don&apost have following user</p>
             )}
 
             {users && users.length > 0 && (

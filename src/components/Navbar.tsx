@@ -48,7 +48,7 @@ export default function Header() {
                 </nav>
                 {session ? (
                     <>
-                        <Link href={`/user/${session.user.name}`} className="overflow-hidden rounded-full mr-3">
+                        <Link href={`/user/${session.user.username}`} className="overflow-hidden rounded-full mr-3">
                             <Avatar image={session.user.image} highlight={true} />
                         </Link>
                         <ColorButton text="Sign Out" onClick={() => signOut()} />

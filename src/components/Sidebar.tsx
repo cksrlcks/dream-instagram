@@ -1,4 +1,4 @@
-import { User } from "@/model/user";
+import { AuthUser } from "@/model/user";
 import Avatar from "./Avatar";
 import Link from "next/link";
 const menu = [
@@ -28,7 +28,7 @@ const menu = [
     },
 ];
 
-export default function Sidebar({ user: { name, username, image } }: { user: User }) {
+export default function Sidebar({ user: { name, username, image } }: { user: AuthUser }) {
     return (
         <>
             <div className="flex gap-2 items-center mb-4">

@@ -1,4 +1,4 @@
-import { User } from "./user";
+import { AuthUser } from "./user";
 
 export type Comment = {
     username: string;

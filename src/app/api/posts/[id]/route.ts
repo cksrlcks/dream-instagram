@@ -12,6 +12,5 @@ export async function GET(request: NextRequest, { params: { id } }: { params: { 
     }
 
     const data = await getPost(id);
-    console.log(data);
     return NextResponse.json(data);
 }

@@ -12,7 +12,6 @@ export default function PostDetail({ post, onClose }: { post: SimplePost; onClos
     const likesCount = likes ? likes.length : 0;
     const { data, isLoading } = useSWR<FullPost>(`/api/posts/${id}`);
     const comments = data?.comments;
-    console.log(comments);
     return (
         <>
             <div className="basis-2/3 bg-slate-100 ">
@@ -48,7 +47,7 @@ export default function PostDetail({ post, onClose }: { post: SimplePost; onClos
                         ))
                     )}
                 </div>
-                <ActionBar likesCount={likesCount} createdAt={createdAt} username={username} text={text} />
+                <ActionBar post={post} />
                 <CommentForm />
             </div>
         </>
