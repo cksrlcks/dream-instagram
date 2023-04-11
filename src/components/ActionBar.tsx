@@ -9,32 +9,30 @@ import BookmarkIcon from "./ui/icons/BookmarkIcon";
 import BookmarkFillIcon from "./ui/icons/BookmarkFillIcon";
 import useSWR, { useSWRConfig } from "swr";
 import { SimplePost } from "@/model/post";
+import usePosts from "@/app/hooks/usePosts";
+import useBookmark from "@/app/hooks/useBookmark";
 
 export default function ActionBar({ post }: { post: SimplePost }) {
     const { username, userImage, image, text, createdAt, id, likes } = post;
-    const { data: me } = useSWR("/api/me");
-    const { mutate } = useSWRConfig();
+
     const { data: session } = useSession();
     const user = session?.user;
     const liked = user ? likes?.includes(user.username) : false;
+    const { setLike } = usePosts();
+
+    const { me, setSave } = useBookmark();
     const saved = me ? me.bookmarks.includes(id) : false;
 
     const handleLike = (like: boolean) => {
-        fetch("/api/like", {
-            method: "PUT",
-            body: JSON.stringify({ id, like }),
-        }).then((res) => {
-            mutate("/api/posts");
-        });
+        if (user) {
+            setLike(post, user.username, like);
+        }
     };
 
     const handleSave = (save: boolean) => {
-        fetch("/api/save", {
-            method: "PUT",
-            body: JSON.stringify({ id, save }),
-        }).then((res) => {
-            mutate("/api/me");
-        });
+        if (user) {
+            setSave(post.id, save);
+        }
     };
 
     return (

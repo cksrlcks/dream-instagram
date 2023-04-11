@@ -1,11 +1,11 @@
 "use client";
 import { SimplePost } from "@/model/post";
-import useSWR from "swr";
 import PostCard from "./PostCard";
 import { ClipLoader } from "react-spinners";
+import usePosts from "@/app/hooks/usePosts";
 
 export default function Posts() {
-    const { data, isLoading, error } = useSWR<SimplePost[]>("/api/posts");
+    const { posts, isLoading, error } = usePosts();
     if (isLoading) {
         return (
             <div className="text-center">
@@ -14,13 +14,13 @@ export default function Posts() {
         );
     }
 
-    if (!data || data.length === 0) {
+    if (!posts || posts.length === 0) {
         return <div className="text-center">데이터가 없습니다.</div>;
     }
 
     return (
         <>
-            {data.map((post, index) => (
+            {posts.map((post, index) => (
                 <PostCard key={post.id} post={post} priority={index < 2} />
             ))}
         </>
