@@ -1,16 +1,15 @@
 "use client";
-import useSWR from "swr";
-import { SimplePost } from "@/model/post";
 import { ClipLoader } from "react-spinners";
 import PostGridCard from "./PostGridCard";
+import usePosts from "@/hooks/usePosts";
 
 type Props = {
     username: string;
     query: string;
 };
 
-export default function PostGrid({ username, query }: Props) {
-    const { data: posts, isLoading, error } = useSWR<SimplePost[]>(`/api/user/${username}/${query}`);
+export default function PostGrid() {
+    const { posts, isLoading } = usePosts();
     return (
         <div className="w-full text-center">
             {isLoading && <ClipLoader />}

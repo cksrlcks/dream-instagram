@@ -1,17 +1,15 @@
-import { savePost, unSavePost } from "@/service/user";
+import { addComment } from "@/service/post";
 import { withSession } from "@/util/withSession";
 import { NextResponse } from "next/server";
 
-export async function PUT(request: Request) {
+export async function POST(request: Request) {
     return withSession(async (user) => {
-        const { id, save } = await request.json();
-        if (!id || save == undefined) {
+        const { id, text } = await request.json();
+        if (!id || text === undefined) {
             return new Response("Bad Request", { status: 400 });
         }
 
-        const query = save ? savePost : unSavePost;
-
-        return query(id, user.id)
+        return addComment(id, user.id, text)
             .then((res) => NextResponse.json(res))
             .catch((err) => new Response(JSON.stringify(err), { status: 500 }));
     });

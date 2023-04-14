@@ -1,13 +1,12 @@
 "use client";
-import useSWR from "swr";
 import ClipLoader from "react-spinners/ClipLoader";
 import Avatar from "./Avatar";
-import { HomeUser, AuthUser } from "@/model/user";
 import Link from "next/link";
 import Slider from "./Slider";
+import useMe from "@/hooks/useMe";
 
 export default function Followers() {
-    const { data, isLoading, error } = useSWR<HomeUser>("/api/me");
+    const { me: data, isLoading, error } = useMe();
     const users = data?.following;
     return (
         <div className="bg-white rounded-md border border-slate-300 mb-4 py-4 px-6">

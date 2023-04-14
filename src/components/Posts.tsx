@@ -1,8 +1,7 @@
 "use client";
-import { SimplePost } from "@/model/post";
 import PostCard from "./PostCard";
 import { ClipLoader } from "react-spinners";
-import usePosts from "@/app/hooks/usePosts";
+import usePosts from "@/hooks/usePosts";
 
 export default function Posts() {
     const { posts, isLoading, error } = usePosts();

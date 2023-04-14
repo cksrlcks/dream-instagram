@@ -5,7 +5,7 @@ import SearchBar from "./SearchBar";
 import UserList from "./UserList";
 import useSWR from "swr";
 import { useState } from "react";
-import useDebounce from "@/app/hooks/useDebounce";
+import useDebounce from "@/hooks/useDebounce";
 
 export default function Search() {
     const [keyword, setKeyword] = useState("");

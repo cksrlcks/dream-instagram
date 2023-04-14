@@ -1,8 +1,9 @@
-import { client, builder } from "./sanity";
+import { client, builder, assetsURL } from "./sanity";
 import { SanityImageSource } from "@sanity/image-url/lib/types/types";
 import { SimplePost } from "../model/post";
 const simplePostProjection = `
     ...,
+    "authorId": author->_id,
     "username" : author->username,
     "userImage": author->image,
     "image" : photo,
@@ -35,7 +36,8 @@ export async function getPost(id: string) {
             "likes" : likes[]->usename,
             "comments" : comments[]{comment, "username" : author->username, "image" :author->image},
             "id":_id,
-            "createdAt":_createdAt
+            "createdAt":_createdAt,
+            "authorId": author->_id
         }
     `
         )
@@ -99,4 +101,46 @@ export async function dislikePost(postId: string, userId: string) {
         .patch(postId)
         .unset([`likes[_ref=="${userId}"]`])
         .commit({ autoGenerateArrayKeys: true });
+}
+
+export async function addComment(postId: string, userId: string, comment: string) {
+    return client
+        .patch(postId)
+        .setIfMissing({ comments: [] })
+        .append("comments", [{ author: { _ref: userId, _type: "reference" }, comment }])
+        .commit({ autoGenerateArrayKeys: true });
+}
+
+export async function createPost(userId: string, text: string, file: Blob) {
+    return fetch(assetsURL, {
+        method: "POST",
+        headers: {
+            "content-type": file.type,
+            authorization: `Bearer ${process.env.SANITY_TOKEN}`,
+        },
+        body: file,
+    })
+        .then((res) => res.json())
+        .then((result) => {
+            return client.create(
+                {
+                    _type: "post",
+                    author: { _ref: userId },
+                    photo: { asset: { _ref: result.document._id } },
+                    comments: [
+                        {
+                            comment: text,
+                            author: { _ref: userId, _type: "reference" },
+                        },
+                    ],
+                    likes: [],
+                },
+                { autoGenerateArrayKeys: true }
+            );
+        })
+        .catch((err) => console.log(err));
+}
+
+export async function deletePost(postId: string) {
+    return client.delete(postId);
 }

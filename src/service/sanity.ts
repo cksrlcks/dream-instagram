@@ -12,3 +12,5 @@ export const clientConfig = {
 export const client = createClient(clientConfig);
 
 export const builder = createImageUrlBuilder(client);
+
+export const assetsURL = `https://${process.env.SANITY_PROJECT_ID}.api.sanity.io/v2021-03-25/assets/images/${process.env.SANITY_DATA_SET}`;

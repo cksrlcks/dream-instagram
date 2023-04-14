@@ -1,6 +1,4 @@
-"use client";
-import { HomeUser, ProfileUser } from "@/model/user";
-import useSWR from "swr";
+import { ProfileUser } from "@/model/user";
 import Avatar from "./Avatar";
 import FollowButton from "./FollowButton";
 

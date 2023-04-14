@@ -3,7 +3,7 @@ import { AuthUser } from "./user";
 export type Comment = {
     username: string;
     comment: string;
-    image: string;
+    image?: string | undefined;
 };
 
 export type FullPost = {
@@ -15,6 +15,7 @@ export type FullPost = {
     createdAt: string;
     likes: string[];
     comments: Comment[];
+    authorId: string;
 };
 
 export type SimplePost = Omit<FullPost, "comments"> & {

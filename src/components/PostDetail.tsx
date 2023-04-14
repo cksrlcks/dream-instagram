@@ -1,16 +1,16 @@
-import useSWR from "swr";
-import { FullPost, SimplePost } from "@/model/post";
+import { SimplePost } from "@/model/post";
 import Image from "next/image";
 import Avatar from "./Avatar";
 import ActionBar from "./ActionBar";
-import CommentForm from "./CommentForm";
 import CloseIcon from "./ui/icons/CloseIcon";
 import { ClipLoader } from "react-spinners";
+import usePost from "@/hooks/usePost";
+import useMe from "@/hooks/useMe";
 
 export default function PostDetail({ post, onClose }: { post: SimplePost; onClose: () => void }) {
-    const { username, userImage, image, text, createdAt, id, likes } = post;
-    const likesCount = likes ? likes.length : 0;
-    const { data, isLoading } = useSWR<FullPost>(`/api/posts/${id}`);
+    const { me } = useMe();
+    const { username, userImage, image, id, authorId } = post;
+    const { post: data, isLoading, setComment, deletePost } = usePost(id);
     const comments = data?.comments;
     return (
         <>
@@ -20,7 +20,12 @@ export default function PostDetail({ post, onClose }: { post: SimplePost; onClos
                 </div>
             </div>
             <div className="basis-1/3 flex flex-col">
-                <div className="text-right text-xl px-1 pt-2">
+                <div className="text-xl px-1 pt-2 flex items-center justify-end">
+                    {data && me?.id === authorId && (
+                        <button className="text-sm" onClick={() => deletePost(data)}>
+                            삭제
+                        </button>
+                    )}
                     <button onClick={onClose} className="w-[30px] h-[30px] inline-flex items-center justify-center">
                         <CloseIcon />
                     </button>
@@ -47,8 +52,7 @@ export default function PostDetail({ post, onClose }: { post: SimplePost; onClos
                         ))
                     )}
                 </div>
-                <ActionBar post={post} />
-                <CommentForm />
+                <ActionBar post={post} onComment={setComment} />
             </div>
         </>
     );
