@@ -39,13 +39,16 @@ export default function usePost(posdId: string) {
         [post, mutate, globalMutate]
     );
 
-    const deletePost = useCallback(async (post: FullPost) => {
-        if (!post) return;
-        return mutate(updatePost(post.id, post.authorId), {
-            populateCache: false,
-            revalidate: false,
-        }).then(() => globalMutate("/api/posts"));
-    }, []);
+    const deletePost = useCallback(
+        async (post: FullPost) => {
+            if (!post) return;
+            return mutate(updatePost(post.id, post.authorId), {
+                populateCache: false,
+                revalidate: false,
+            }).then(() => globalMutate("/api/posts"));
+        },
+        [mutate, globalMutate]
+    );
 
     return { post, isLoading, error, setComment, deletePost };
 }
